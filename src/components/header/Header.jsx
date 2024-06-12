@@ -18,18 +18,11 @@ function Header({ monthState, yearState, typeState }) {
         computedMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;
         computedYear = selectedMonth === 0 ? selectedYear - 1 : selectedYear;
       }
-    } else if (headerType === 2) {
+    } else if (headerType > 1) {
       if (num > 0) {
-        computedYear = selectedYear + 1;
+        computedYear = headerType === 2 ? selectedYear + 1 : Math.ceil(selectedYear/10) * 10;
       } else if (num < 0) {
-        computedYear = selectedYear - 1;
-      }
-      computedMonth = selectedMonth;
-    } else if (headerType === 3) {
-      if (num > 0) {
-        computedYear = Math.ceil(selectedYear/10) * 10;
-      } else if (num < 0) {
-        computedYear = Math.floor(selectedYear/10) * 10 - 1;
+        computedYear = headerType === 2 ? selectedYear - 1 : Math.floor(selectedYear/10) * 10 - 1;
       }
       computedMonth = selectedMonth;
     }
