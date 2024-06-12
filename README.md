@@ -18,16 +18,19 @@ It is a standard datepicker component that allows you to choose and display your
 
 ```bash
 git clone https://github.com/gizmora/datepicker-project.git
+```
 
 2. Navigate to the project's directory:
 
 ```bash
 cd project directory
+```
 
 3. Install dependencies:
 
 ```bash
 npm install
+```
 
 ## Usage
 
@@ -35,6 +38,7 @@ To run the project:
 
 ```bash
 npm run dev
+```
 
 
 ## Feedback
@@ -48,4 +52,6 @@ I would like to here your feedbacks about the app. Email me @ graceirenemora@gma
 5. Push to the branch (git push origin feature-branch).
 6. Create a new pull request.
 
-Rest assured, I would be reading all feedbacks and concerns.
+Rest assured, I would be reading all feedbacks and concerns. 
+
+Happy Coding! :computer:
