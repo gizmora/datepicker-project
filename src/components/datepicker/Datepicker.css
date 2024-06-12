@@ -1,7 +1,8 @@
 .__datepicker {
   width: 250px;
-  padding: 5px;
+  padding: 20px;
   margin: auto;
+  border: solid 1px #e0e0e0;
 }
 
 .__datepicker .row {
