@@ -4,8 +4,6 @@ import './CalendarGrid.css';
 
 function CalendarGrid ({ monthState, yearState }) {
   const currentDay = new Date().getDate();
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
   const [selectedDay, setSelectedDay] = useState(currentDay);
   const {selectedMonth, setSelectedMonth} = monthState;
   const {selectedYear, setSelectedYear} = yearState;
@@ -22,6 +20,8 @@ function CalendarGrid ({ monthState, yearState }) {
   }
 
   function isToday(day) {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
     return day === currentDay && currentMonth === selectedMonth && currentYear === selectedYear;
   }
 
