@@ -1,7 +1,17 @@
 .month-year-header .nav-btn {
   cursor: pointer;
+  display: flex;
 }
 
 .month-year {
   font-weight: bold;
+  padding: 5px 0px;
+  flex: 1 1 0%;
+  text-align: center;
+  margin: 0px 10px;
+}
+
+.month-year:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
 }
