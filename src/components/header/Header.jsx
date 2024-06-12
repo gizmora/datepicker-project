@@ -1,20 +1,37 @@
-import { MONTHS } from '../../data/months';
-import PropTypes from 'prop-types';
-import './Header.css';
+import { MONTHS } from "../../data/months";
+import PropTypes from "prop-types";
+import "./Header.css";
 
-function Header({ monthState, yearState, typeState}) {
+function Header({ monthState, yearState, typeState }) {
   const { selectedMonth, setSelectedMonth } = monthState;
   const { selectedYear, setSelectedYear } = yearState;
   const { headerType, setHeaderType } = typeState;
 
   function clickNavButtonHandler(num) {
     var computedMonth, computedYear = 0;
-    if (num > 0) {
-      computedMonth = selectedMonth === 11 ? 0 : selectedMonth+1;
-      computedYear = selectedMonth === 11 ? selectedYear+1 : selectedYear;
-    } else if (num < 0) {
-      computedMonth = selectedMonth === 0 ? 11 : selectedMonth-1;
-      computedYear = selectedMonth === 0 ? selectedYear-1: selectedYear;
+
+    if (headerType === 1) {
+      if (num > 0) {
+        computedMonth = selectedMonth === 11 ? 0 : selectedMonth + 1;
+        computedYear = selectedMonth === 11 ? selectedYear + 1 : selectedYear;
+      } else if (num < 0) {
+        computedMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;
+        computedYear = selectedMonth === 0 ? selectedYear - 1 : selectedYear;
+      }
+    } else if (headerType === 2) {
+      if (num > 0) {
+        computedYear = selectedYear + 1;
+      } else if (num < 0) {
+        computedYear = selectedYear - 1;
+      }
+      computedMonth = selectedMonth;
+    } else if (headerType === 3) {
+      if (num > 0) {
+        computedYear = Math.ceil(selectedYear/10) * 10;
+      } else if (num < 0) {
+        computedYear = Math.floor(selectedYear/10) * 10 - 1;
+      }
+      computedMonth = selectedMonth;
     }
 
     setSelectedMonth(computedMonth);
@@ -24,12 +41,14 @@ function Header({ monthState, yearState, typeState}) {
   function renderHeader() {
     switch (headerType) {
       case 2:
-        return `${selectedYear}`
+        return `${selectedYear}`;
       case 3:
-        return `${Math.floor(selectedYear/10)*10-1}-${Math.ceil(selectedYear/10)*10}`
+        return `${Math.floor(selectedYear / 10) * 10 - 1}-${
+          Math.ceil(selectedYear / 10) * 10
+        }`;
       default:
         return `${MONTHS[selectedMonth].fullName} ${selectedYear}`;
-    } 
+    }
   }
 
   function clickHeader() {
@@ -42,22 +61,26 @@ function Header({ monthState, yearState, typeState}) {
 
     setHeaderType(type);
   }
-  
+
   return (
     <div className="row month-year-header">
-      <div className="nav-btn" onClick={() => clickNavButtonHandler(-1)}>&lt;</div>
-      <div className="month-year" onClick={() => clickHeader()}>
-        {renderHeader()} 
+      <div className="nav-btn" onClick={() => clickNavButtonHandler(-1)}>
+        &lt;
       </div>
-      <div className="nav-btn" onClick={() => clickNavButtonHandler(1)}>&gt;</div>
+      <div className="month-year" onClick={() => clickHeader()}>
+        {renderHeader()}
+      </div>
+      <div className="nav-btn" onClick={() => clickNavButtonHandler(1)}>
+        &gt;
+      </div>
     </div>
-  )
+  );
 }
 
 Header.propTypes = {
   monthState: PropTypes.object,
   yearState: PropTypes.object,
-  typeState: PropTypes.object
-}
+  typeState: PropTypes.object,
+};
 
 export default Header;
