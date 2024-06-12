@@ -1,0 +1,10 @@
+Datepicker:
+  Calendar:
+    ☐ Generate calendar
+      ☐ Per year
+      ☐ Per month
+    Month:
+      ☐ Months view
+    Year:
+      ☐ Year view
+      ☐ Pagination

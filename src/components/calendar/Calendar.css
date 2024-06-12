@@ -1,0 +1,41 @@
+.row.month-year-header {
+  font-weight: bold;
+}
+
+.row .name {
+  width: 30px;
+  font-weight: bold;
+}
+
+.row .day {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.row .day:hover {
+  cursor: pointer;
+}
+
+.row .day:not(.selected):hover {
+  background-color: #eeeeee;
+}
+
+.day.other-month {
+  color: #eeeeee;
+}
+
+.day.current-month {
+  color: black;
+}
+
+.day.current-day {
+  color: red;
+}
+
+.day.selected {
+  color: white;
+  background-color: #db3d44;
+  border-radius: 50%;
+}
