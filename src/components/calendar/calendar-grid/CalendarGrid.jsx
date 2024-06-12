@@ -2,37 +2,40 @@ import { useState } from "react";
 import PropTypes from 'prop-types';
 import './CalendarGrid.css';
 
-function CalendarGrid ({month, year, modifyMonth, modifyYear}) {
+function CalendarGrid ({ monthState, yearState }) {
   const currentDay = new Date().getDate();
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   const [selectedDay, setSelectedDay] = useState(currentDay);
+  const {selectedMonth, setSelectedMonth} = monthState;
+  const {selectedYear, setSelectedYear} = yearState;
+  const daysHeader = ['Su','Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 
   function clickDayHandler(item) {
     setSelectedDay(item.day);
 
-    if (item.month !== month) {
-      modifyMonth(item.month);
-      modifyYear(item.year);
+    if (item.month !== selectedMonth) {
+      setSelectedMonth(item.month);
+      setSelectedYear(item.year);
     }
   }
 
   function isToday(day) {
-    return day === currentDay && currentMonth === month && currentYear === year;
+    return day === currentDay && currentMonth === selectedMonth && currentYear === selectedYear;
   }
 
   function generate() {
     var weeks = [];
-    var currMonthDays = countDaysInMonth(month, year);
-    var firstDay = new Date(year, month, 1).getDay();
+    var currMonthDays = countDaysInMonth(selectedMonth, selectedYear);
+    var firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
 
-    var prevMonth = month === 0 ? 11 : month - 1;
-    var prevMonthYear = month === 0 ? year - 1 : year;
+    var prevMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;
+    var prevMonthYear = selectedMonth === 0 ? selectedYear - 1 : selectedYear;
     var prevMonthDays = countDaysInMonth(prevMonth, prevMonthYear);
 
-    var nextMonth = month === 11 ? 0 : month + 1;
-    var nextMonthYear = month === 11 ? year + 1 : year;
+    var nextMonth = selectedMonth === 11 ? 0 : selectedMonth + 1;
+    var nextMonthYear = selectedMonth === 11 ? selectedYear + 1 : selectedYear;
 
     var currDay = 1;
     var prevMonthDay = prevMonthDays - firstDay + 1;
@@ -49,7 +52,7 @@ function CalendarGrid ({month, year, modifyMonth, modifyYear}) {
           currWeek.push({day: nextMonthDay, month: nextMonth, year: nextMonthYear});
           nextMonthDay++;
         } else {
-          currWeek.push({day: currDay, month: month, year: year, selected: currDay === selectedDay});
+          currWeek.push({day: currDay, month: selectedMonth, year: selectedYear, selected: currDay === selectedDay});
           currDay++;
         }
       }
@@ -64,16 +67,21 @@ function CalendarGrid ({month, year, modifyMonth, modifyYear}) {
     return new Date(year, month + 1, 0).getDate();
   }
 
-  var grid = generate();
+  const grid = generate();
   return (
     <>
+      <div className="row">
+        {daysHeader.map((day,index) => {
+          return <div key={index} className="name">{day}</div>
+        })}
+      </div>
       {grid.map((week,weekIndex) => {
         return <div key={weekIndex} className="row">
           {week.map((item,itemIndex) => {
             return (
               <div 
                 key={itemIndex} 
-                className={`day ${item.month === month ? 'current-month' : 'other-month'}${isToday(item.day) ? ' today' : ''}${item.selected ? ' selected' : ''}`}
+                className={`day ${item.month === selectedMonth ? 'current-month' : 'other-month'}${isToday(item.day) ? ' today' : ''}${item.selected ? ' selected' : ''}`}
                 onClick={() => clickDayHandler(item)}
               >{item.day}</div>
             )
@@ -85,10 +93,8 @@ function CalendarGrid ({month, year, modifyMonth, modifyYear}) {
 }
 
 CalendarGrid.propTypes = {
-  year: PropTypes.number,
-  month: PropTypes.number,
-  modifyMonth: PropTypes.func,
-  modifyYear: PropTypes.func
+  monthState: PropTypes.object,
+  yearState: PropTypes.object
 }
 
 export default CalendarGrid;
