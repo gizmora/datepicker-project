@@ -67,7 +67,15 @@ function CalendarGrid ({ monthState, yearState }) {
     return new Date(year, month + 1, 0).getDate();
   }
 
+  function getClassForDay(item) {
+    var isCurrentMonth = item.month === selectedMonth;
+    var now = isToday(item.day);
+    
+    return `day ${isCurrentMonth ? 'current-month' : 'other-month'}${now ? ' today': ''}${item.selected ? ' selected': ''}`;
+  }
+
   const grid = generate();
+
   return (
     <>
       <div className="row">
@@ -81,7 +89,7 @@ function CalendarGrid ({ monthState, yearState }) {
             return (
               <div 
                 key={itemIndex} 
-                className={`day ${item.month === selectedMonth ? 'current-month' : 'other-month'}${isToday(item.day) ? ' today' : ''}${item.selected ? ' selected' : ''}`}
+                className={getClassForDay(item)}
                 onClick={() => clickDayHandler(item)}
               >{item.day}</div>
             )
