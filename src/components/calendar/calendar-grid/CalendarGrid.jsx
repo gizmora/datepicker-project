@@ -1,42 +1,26 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+import './CalendarGrid.css';
 
-
-function CalendarGrid ({month, year}) {
+function CalendarGrid ({month, year, modifyMonth, modifyYear}) {
   const currentDay = new Date().getDate();
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
   const [selectedDay, setSelectedDay] = useState(currentDay);
 
 
-  function clickDay(item) {
-    if (item.isCurrentMonth) {
-      setSelectedDay(item.day);
+  function clickDayHandler(item) {
+    setSelectedDay(item.day);
+
+    if (item.month !== month) {
+      modifyMonth(item.month);
+      modifyYear(item.year);
     }
   }
 
-  // function generate() {
-  //   var weeks = [];
-  //   var curr = 1;
-  //   var limit = month.days;
-  
-  //   for (var i=0; i<6; i++) {
-  //     var days = new Array(7).fill(0);
-  //     for (var j=0; j<days.length; j++) {
-  //       var isCurrentMonth = (curr <= limit) ? true : false;
-  //       var isSelected = (curr === selectedDay) ? true : false;
-
-  //       days[j] = {
-  //         day: (curr > limit ? curr-limit : curr),
-  //         isCurrentMonth, 
-  //         isSelected,
-  //       };
-
-  //       curr++;
-  //     }
-      
-  //     weeks.push(days);
-  //   }
-    
-  //   return weeks;
-  // }
+  function isToday(day) {
+    return day === currentDay && currentMonth === month && currentYear === year;
+  }
 
   function generate() {
     var weeks = [];
@@ -59,11 +43,14 @@ function CalendarGrid ({month, year}) {
 
       for (var day=0; day < 7; day++) {
         if (week === 0 && day < firstDay) {
-          currWeek.push({day: prevMonthDay++, month: prevMonth, year: prevMonthYear});
+          currWeek.push({day: prevMonthDay, month: prevMonth, year: prevMonthYear});
+          prevMonthDay++;
         } else if (currDay > currMonthDays) {
-          currWeek.push({day: nextMonthDay++, month: nextMonth, year: nextMonthYear});
+          currWeek.push({day: nextMonthDay, month: nextMonth, year: nextMonthYear});
+          nextMonthDay++;
         } else {
-          currWeek.push({day: currDay++, month: month, year: year});
+          currWeek.push({day: currDay, month: month, year: year, selected: currDay === selectedDay});
+          currDay++;
         }
       }
 
@@ -86,8 +73,8 @@ function CalendarGrid ({month, year}) {
             return (
               <div 
                 key={itemIndex} 
-                className={`day ${item.month === month ? 'current-month' : 'other-month'}${item.isSelected ? ' selected' : ''}`}
-                onClick={() => clickDay(item)}
+                className={`day ${item.month === month ? 'current-month' : 'other-month'}${isToday(item.day) ? ' today' : ''}${item.selected ? ' selected' : ''}`}
+                onClick={() => clickDayHandler(item)}
               >{item.day}</div>
             )
           })}
@@ -95,6 +82,13 @@ function CalendarGrid ({month, year}) {
       })}
     </>
   )
+}
+
+CalendarGrid.propTypes = {
+  year: PropTypes.number,
+  month: PropTypes.number,
+  modifyMonth: PropTypes.func,
+  modifyYear: PropTypes.func
 }
 
 export default CalendarGrid;
