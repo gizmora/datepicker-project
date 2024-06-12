@@ -1,8 +1,9 @@
 import './MonthView.css';
 import PropTypes from 'prop-types';
 
-function MonthView ({monthState}) {
+function MonthView ({ monthState, typeState}) {
   const { selectedMonth, setSelectedMonth } = monthState;
+  const { setHeaderType } = typeState;
   const gridMonths = [
     [{id: 0, name: 'Jan'}, {id: 1, name: 'Feb'}, {id: 2, name: 'Mar'}, {id: 3, name: 'Apr'}],
     [{id: 4, name: 'May'}, {id: 5, name: 'Jun'}, {id: 6, name: 'Jul'}, {id: 7, name: 'Aug'}],
@@ -11,6 +12,7 @@ function MonthView ({monthState}) {
 
   function clickMonthHandler(month) {
     setSelectedMonth(month);
+    setHeaderType(1);
   }
   return (
     <>
@@ -30,7 +32,8 @@ function MonthView ({monthState}) {
 }
 
 MonthView.propTypes = {
-  monthState: PropTypes.object
+  monthState: PropTypes.object,
+  typeState: PropTypes.object
 }
 
 export default MonthView;
