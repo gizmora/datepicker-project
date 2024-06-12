@@ -1,0 +1,20 @@
+.year {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.year:hover {
+  cursor: pointer;
+}
+
+.year:not(.selected):hover {
+  background-color: #eeeeee;
+}
+
+.year.selected {
+  color: white;
+  background-color: #db3d44;
+  border-radius: 50%;
+}
