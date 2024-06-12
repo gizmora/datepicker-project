@@ -8,9 +8,9 @@ It is a standard datepicker component that allows you to choose and display your
 
 ## Table of Contents
 
-- [Installation][#installation]
-- [Usage][#usage]
-- [Feedback][#feedback]
+- [Installation](#installation)
+- [Usage](#usage)
+- [Feedback](#feedback)
 
 ## Instalation
 
