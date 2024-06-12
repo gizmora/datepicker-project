@@ -6,8 +6,10 @@ import MonthView from "../month-view/MonthView";
 import YearView from "../year-view/YearView";
 
 function Calendar() {
+  const currentDay = new Date().getDate();
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
+  const [selectedDay, setSelectedDay] = useState(currentDay);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [headerType, setHeaderType] = useState(1);
@@ -33,6 +35,7 @@ function Calendar() {
           <CalendarGrid
             monthState={{ selectedMonth, setSelectedMonth }}
             yearState={{ selectedYear, setSelectedYear }}
+            dayState={{ selectedDay, setSelectedDay }}
           />
         );
     }

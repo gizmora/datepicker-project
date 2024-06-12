@@ -1,14 +1,10 @@
-import { useState } from "react";
 import PropTypes from 'prop-types';
 import './CalendarGrid.css';
 
-function CalendarGrid ({ monthState, yearState }) {
-  const currentDay = new Date().getDate();
-  const [selectedDay, setSelectedDay] = useState(currentDay);
-  const {selectedMonth, setSelectedMonth} = monthState;
-  const {selectedYear, setSelectedYear} = yearState;
-  const daysHeader = ['Su','Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
+function CalendarGrid ({ monthState, yearState , dayState}) {
+  const { selectedDay, setSelectedDay } = dayState;
+  const { selectedMonth, setSelectedMonth } = monthState;
+  const { selectedYear, setSelectedYear } = yearState;
 
   function clickDayHandler(item) {
     setSelectedDay(item.day);
@@ -20,6 +16,7 @@ function CalendarGrid ({ monthState, yearState }) {
   }
 
   function isToday(day) {
+    const currentDay = new Date().getDate();
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     return day === currentDay && currentMonth === selectedMonth && currentYear === selectedYear;
@@ -75,6 +72,7 @@ function CalendarGrid ({ monthState, yearState }) {
   }
 
   const grid = generate();
+  const daysHeader = ['Su','Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   return (
     <>
@@ -102,7 +100,8 @@ function CalendarGrid ({ monthState, yearState }) {
 
 CalendarGrid.propTypes = {
   monthState: PropTypes.object,
-  yearState: PropTypes.object
+  yearState: PropTypes.object,
+  dayState: PropTypes.object
 }
 
 export default CalendarGrid;
